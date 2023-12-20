@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <title>Hamburguer</title>
+
+</head>
+
+<body>
+  <nav class="navbar bg-body-tertiary">
+    <div class="container">
+      <span class="navbar-brand mb-0 h1">Monte seu lanche</span>
+    </div>
+  </nav>
+  <div class="container">
+    <div id="app">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col">
+              <img :src='pao[0]' alt="imagem">
+              <img :src='salada' alt="imagem">
+              <img :src='ketchup' alt="imagem">
+              <img :src='maionese' alt="imagem">
+              <img :src='mostarda' alt="imagem">
+              <img :src='hamburguer' alt="imagem">
+              <img :src='pao[1]' alt="imagem">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" v-if='etapa == 1'>
+          <!-- tipo do pão -->
+          <div class="row mt-2">
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  TIPO DO PÃO
+                </div>
+                <div class="card-body">
+                  <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" value='gergelim' v-model='inputTipoPao'>
+                    <label class="form-check-label">Gergelim</label>
+                  </div>
+                  <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" value='australiano' v-model='inputTipoPao'>
+                    <label class="form-check-label">Autraliano</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Saladas -->
+          <div class="row mt-2">
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  SALADAS
+                </div>
+                <div class="card-body">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value='alface' v-model='inputSalada'>
+                    <label class="form-check-label">
+                      Alface
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- molhos -->
+          <div class="row mt-2">
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  MOLHOS
+                </div>
+                <div class="card-body">
+                  <div class="form-check-inline">
+                    <input class="form-check-input" type="checkbox" value='ketchup' v-model='inputMolhos'>
+                    <label class="form-check-label">
+                      Ketchup
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <input class="form-check-input" type="checkbox" value='maionese' v-model='inputMolhos'>
+                    <label class="form-check-label">
+                      Maionese
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <input class="form-check-input" type="checkbox" value='mostarda' v-model='inputMolhos'>
+                    <label class="form-check-label">
+                      Mostarda
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- tipos de hamburguers -->
+          <div class="row mt-2">
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  HAMBURGUERS
+                </div>
+                <div class="card-body">
+                  <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" value='bovino' v-model='inputHamburguer'>
+                    <label class="form-check-label">Bovino</label>
+                  </div>
+                  <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" value='frango' v-model='inputHamburguer'>
+                    <label class="form-check-label">Frango</label>
+                  </div>
+                  <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" value='soja' v-model='inputHamburguer'>
+                    <label class="form-check-label">Soja</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col d-flex justify-content-end">
+              <button type='button' class='btn btn-primary' @click='fazerPedido'>Fazer pedido</button>
+            </div>
+          </div>
+        </div>
+        <!-- Conteudo - 2 -->
+        <div class="col-md-6 conteudo-2" v-if=' etapa==2'>
+          <div class="row mt-2">
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  INFORME SEUS DADOS
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label class="form-label">Nome</label>
+                    <input type="text" class='form-control' v-model='inputNome'>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Endereço</label>
+                    <input type="text" class='form-control' v-model='inputEndereco'>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col d-flex justify-content-between">
+              <button type='button' class='btn btn-warning' @click='etapa = etapa - 1'>Voltar</button>
+              <button type='button' class='btn btn-success' @click='confirmarPedido'>Confirmar pedido</button>
+            </div>
+          </div>
+        </div>
+        <!-- Conteudo - 3 -->
+        <div class="col-md-6 conteudo-3" v-if='etapa == 3'>
+          <div class="row mt-2">
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  SUCESSO!
+                </div>
+                <div class="card-body">
+                  <p>Seu pedido esta a caminho! <strong>Aguarde por favor.</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col d-flex justify-content-between">
+              <button type='button' class='btn btn-primary' @click='etapa = 1'>Repetir pedido</button>
+              <button type='button' class='btn btn-success' @click='novoPedido'>Novo pedido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: "#app",
+      data: {
+        inputTipoPao: '',
+        inputSalada: [],
+        inputMolhos: [],
+        inputHamburguer: '',
+        etapa: 1,
+        inputNome: '',
+        inputEndereco: '',
+        novoPedidoAssincrono: null,
+      },
+      computed: {
+        pao() {
+          switch (this.inputTipoPao) {
+            case 'gergelim':
+              return ["./imagens/pao_gergelim_superior.png", "./imagens/pao_gergelim_inferior.png"]
+            case "australiano":
+              return ["./imagens/pao_australiano_superior.png", "./imagens/pao_australiano_inferior.png"]
+            default:
+              return ["./imagens/padrao/pao_superior.png", "./imagens/padrao/pao_inferior.png"]
+          }
+        },
+        salada() {
+          console.log("alface")
+          if (this.inputSalada.includes("alface")) {
+            return ["./imagens/alface.png"]
+          } else {
+            return ["./imagens/padrao/alface.png"]
+          }
+        },
+        molhos() {
+          switch (true) {
+            case this.inputMolhos.includes("ketchup"):
+              return ["ketchup.png"]
+            case this.inputMolhos.includes("maionese"):
+              return ["maionese.png"]
+            case this.inputMolhos.includes("mostarda"):
+              return ["mostarda.png"]
+          }
+        },
+        ketchup() {
+          if (this.inputMolhos.includes("ketchup")) {
+            return "./imagens/ketchup.png"
+          }
+          return "./imagens/padrao/molho.png"
+        },
+        maionese() {
+          if (this.inputMolhos.includes("maionese")) {
+            return "./imagens/maionese.png"
+          }
+          return "./imagens/padrao/molho.png"
+        },
+        mostarda() {
+          if (this.inputMolhos.includes("mostarda")) {
+            return "./imagens/mostarda.png"
+          }
+          return "./imagens/padrao/molho.png"
+        },
+        hamburguer() {
+          switch (this.inputHamburguer) {
+            case 'bovino':
+              return "./imagens/bovino.png"
+            case 'frango':
+              return "./imagens/frango.png"
+            case 'soja':
+              return "./imagens/soja.png"
+            default:
+              return "./imagens/padrao/hamburguer.png"
+          }
+        }
+      },
+      methods: {
+        fazerPedido() {
+          if (this.inputTipoPao && this.inputHamburguer) {
+            this.etapa = 2
+          } else {
+            alert("Hamburguer ou pão não selecionado!")
+          }
+        },
+        confirmarPedido() {
+          if (this.inputNome && this.inputEndereco) {
+            this.etapa = 3
+            // realizar uma requisição http enviando os dados do pedido para o back-end da aplicação
+            this.novoPedidoAssincrono = setTimeout(() => this.novoPedido(), 7000)
+          } else {
+            alert("Preencha: Nome e Endereço para concluír seu pedido!")
+          }
+        },
+        novoPedido() {
+          this.etapa = 1;
+          this.inputTipoPao = '';
+          this.inputSalada = [];
+          this.inputMolhos = [];
+          this.inputHamburguer = '';
+          this.etapa = 1;
+          this.inputNome = '';
+          this.inputEndereco = '';
+        }
+      },
+      watch: {
+        etapa(novoValor) {
+          if (novoValor == 1) {
+            clearTimeout(this.novoPedidoAssincrono)
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
